@@ -10,20 +10,21 @@ I made very little modification to get it to work with a Sublime Text 2 plugin.
   cmd + k
 ```
 
-### Installation
+
+# Installation
 
 A pull request has been issued to Package Control.
 
 Until accepted, usually a day or two, use the manual instructions.
 
-## Manual Installation
+### Manual Installation
 
 ```bash
   cd "~/Library/Application Support/Sublime Text 2/Packages/"
   git clone git://github.com/CraigWilliams/BeautifyRuby.git
 ```
 
-## Package Control
+### Package Control
 Using [Package Control](http://wbond.net/sublime_packages/package_control), a
 package manager for Sublime Text 2.
 
