@@ -1,3 +1,6 @@
+#Update
+  Changed key binding so it did not interfere with opening the side panel.
+
 # BeautifyRuby
 
 Beautifies Ruby code. This plugin uses the [Ruby Script Beautifier](http://www.arachnoid.com/ruby/rubyBeautifier.html) written by P.Lotus
@@ -7,7 +10,7 @@ I made very little modification to get it to work with a Sublime Text 2 plugin.
 ### Key Binding
 
 ```
-  cmd + k
+  ctrl + cmd + k
 ```
 
 

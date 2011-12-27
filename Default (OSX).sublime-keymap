@@ -1,3 +1,3 @@
 [
-  { "keys": ["super+k"], "command": "beautify_ruby" }
+  { "keys": ["ctrl+super+k"], "command": "beautify_ruby" }
 ]
