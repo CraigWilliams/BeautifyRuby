@@ -4,8 +4,12 @@
   Removed a ':' that was causing an error.
 
   2012-01-21
+<<<<<<< HEAD
+  To avoid potential data loss, the document saves before and after running beautifier.
+=======
 
   To avoid potential data loss, the document saves before running beautifier.
+>>>>>>> Fixed a bug
 
   2012-01
 

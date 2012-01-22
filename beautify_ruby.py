@@ -7,7 +7,7 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     ext = os.path.basename(self.view.file_name())
 
     if ext.endswith(".rb"):
-      self.save_document_if_dirty():
+      self.save_document_if_dirty()
       ruby_script  = self.ruby_script()
       current_file = self.view.file_name()
       args         = "/usr/bin/ruby '" + ruby_script + "' '" + unicode(current_file) + "'"
