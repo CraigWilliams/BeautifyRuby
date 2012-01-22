@@ -5,7 +5,7 @@
 
   2012-01-21
 
-  To avoid potential data loss, the document saves before running beautifier.
+  To avoid potential data loss, the document saves before and after running beautifier.
 
   2012-01
 
