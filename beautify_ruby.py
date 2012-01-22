@@ -14,6 +14,7 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
       beautified   = os.popen(args).read()
 
       self.update_view(beautified)
+      self.view.run_command('save')
     else:
       sublime.error_message("This is not a Ruby file.")
 
