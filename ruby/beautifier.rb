@@ -17,9 +17,11 @@ $tabStr = " "
 $indentExp = [
    /^module\b/,
    /^if\b/,
+   /^\@{0,2}[\w\.]*[\s\t]*\=[\s\t]*if\b/,
    /(=\s*|^)until\b/,
    /(=\s*|^)for\b/,
    /^unless\b/,
+   /^\@{0,2}[\w\.]*[\s\t]*\=[\s\t]*unless\b/,
    /(=\s*|^)while\b/,
    /(=\s*|^)begin\b/,
    /(^| )case\b/,
