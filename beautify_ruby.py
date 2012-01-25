@@ -13,7 +13,7 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
       args         = "/usr/bin/ruby '" + ruby_script + "' '" + unicode(current_file) + "'"
       beautified   = os.popen(args).read()
 
-      self.update_view(beautified)
+      self.update_view(beautified.decode('utf8'))
       self.view.run_command('save')
     else:
       sublime.error_message("This is not a Ruby file.")
