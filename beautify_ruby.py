@@ -19,7 +19,7 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
       sublime.error_message("This is not a Ruby file.")
 
   def ruby_script(self):
-    return os.path.join(sublime.packages_path(), 'BeautifyRuby', 'Ruby', 'beautifier.rb')
+    return os.path.join(sublime.packages_path(), 'BeautifyRuby', 'ruby', 'beautifier.rb')
 
   def update_view(self, contents):
     body = self.view.window().active_view().substr(sublime.Region(0, self.view.window().active_view().size()))
