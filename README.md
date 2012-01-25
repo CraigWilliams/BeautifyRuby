@@ -1,4 +1,9 @@
 #Update
+
+  2011-01-24
+
+  Now handles ascii characters.
+
   2011-01-22
 
   Removed a ':' that was causing an error.
