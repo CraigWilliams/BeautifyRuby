@@ -1,17 +1,17 @@
 import os.path
 from os import popen
-import sublime, sublime_plugin, sys
+import sublime, sublime_plugin, sys, re
 
 class BeautifyRubyCommand(sublime_plugin.TextCommand):
   def run(self, edit):
-    ext = os.path.basename(self.view.file_name())
+    self.settings = sublime.load_settings('BeautifyRuby.sublime-settings')
+    self.filename = self.view.window().active_view().file_name()
+    fname         = os.path.basename(self.filename)
 
-    if ext.endswith(".rb"):
+    if self.is_ruby_file(fname):
       self.save_document_if_dirty()
-      ruby_script  = self.ruby_script()
-      current_file = self.view.file_name()
-      args         = "/usr/bin/ruby '" + ruby_script + "' '" + unicode(current_file) + "'"
-      beautified   = os.popen(args).read()
+
+      beautified   = os.popen(self.cmd()).read()
 
       self.update_view(beautified.decode('utf8'))
       self.view.run_command('save')
@@ -31,3 +31,22 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
   def save_document_if_dirty(self):
     if self.view.is_dirty():
       self.view.run_command('save')
+
+  def tab_or_space_setting(self):
+    tab_or_space = self.settings.get('tab_or_space')
+    if tab_or_space == '':
+      return 'space'
+    else:
+      return tab_or_space
+
+  def cmd(self):
+    ruby_script  = self.ruby_script()
+    tab_or_space = self.tab_or_space_setting()
+    return "/usr/bin/ruby '" + ruby_script + "' '" + tab_or_space + "'" + " '" + unicode(self.filename) + "'"
+
+  def is_ruby_file(self, fname):
+    patterns = re.compile(r'\.rb|\.rake')
+    if patterns.search(fname):
+      return True
+    else:
+      return False

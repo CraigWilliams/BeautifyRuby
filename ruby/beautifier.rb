@@ -9,12 +9,9 @@
 # 12/26/2011
 # Modified (very minor) to work with a Sublime Text 2 plugin
 
-$tabSize = 2
-$tabStr = " "
-
 # indent regexp tests
 
-$indentExp = [
+@indentExp = [
    /^module\b/,
    /^if\b/,
    /^\@{0,2}[\w\.]*[\s\t]*\=[\s\t]*if\b/,
@@ -40,7 +37,7 @@ $indentExp = [
 
 # outdent regexp tests
 
-$outdentExp = [
+@outdentExp = [
    /^rescue\b/,
    /^ensure\b/,
    /^elsif\b/,
@@ -52,7 +49,7 @@ $outdentExp = [
 ]
 
 def makeTab(tab)
-   return (tab < 0) ? "" : $tabStr * $tabSize * tab
+   return (tab < 0) ? "" : @tabStr * @tabSize * tab
 end
 
 def addLine(line,tab)
@@ -117,7 +114,7 @@ def beautifyRuby(contents)
             while tline.gsub!(/%r(.).*?\1/,"")
             end
             tline.gsub!(/\\\"/,"'")
-            $outdentExp.each do |re|
+            @outdentExp.each do |re|
                if(tline =~ re)
                   tab -= 1
                   break
@@ -134,7 +131,7 @@ def beautifyRuby(contents)
             dest += addLine(line,tab)
          end
          if(!commentLine)
-            $indentExp.each do |re|
+            @indentExp.each do |re|
                if(tline =~ re && !(tline =~ /\s+end\s*$/))
                   tab += 1
                   break
@@ -153,7 +150,16 @@ def beautifyRuby(contents)
    # end
 end
 
-path = ARGV.first
-contents = IO.read(path)
+tab_or_space = ARGV.first
+path         = ARGV.last
+contents     = IO.read(path)
+
+if tab_or_space == 'space'
+  @tabSize = 2
+  @tabStr = " "
+else
+  @tabSize = 1
+  @tabStr = " "
+end
 
 beautifyRuby(contents)

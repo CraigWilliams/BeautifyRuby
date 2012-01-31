@@ -1,10 +1,14 @@
 #Update
 
-  2011-01-24
+  2012-01-30
+
+  Added setting to use a tab instead of two spaces. Also considers 'rake' files ruby files.
+
+  2012-01-24
 
   Now handles ascii characters.
 
-  2011-01-22
+  2012-01-22
 
   Removed a ':' that was causing an error.
 
