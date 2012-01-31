@@ -49,13 +49,13 @@
 ]
 
 def makeTab(tab)
-   return (tab < 0) ? "" : @tabStr * @tabSize * tab
+   (tab < 0) ? "" : @tabStr * @tabSize * tab
 end
 
 def addLine(line,tab)
    line.strip!
    line = makeTab(tab)+line if line.length > 0
-   return line + "\n"
+   line + "\n"
 end
 
 def beautifyRuby(contents)
@@ -159,7 +159,7 @@ if tab_or_space == 'space'
   @tabStr = " "
 else
   @tabSize = 1
-  @tabStr = " "
+  @tabStr = "\t"
 end
 
 beautifyRuby(contents)
