@@ -1,0 +1,10 @@
+[
+    {
+        "id": "edit",
+        "children":
+        [
+            {"id": "wrap"},
+            { "command": "beautify_ruby" }
+        ]
+    }
+]

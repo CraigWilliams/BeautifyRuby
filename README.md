@@ -1,5 +1,9 @@
 #Update
 
+  2012-02-03
+
+  Added BeautifyRuby to Edit menu item and cmd+shift+p command pallet
+
   2012-01-30
 
   Added setting to use a tab instead of two spaces. Also considers 'rake' files ruby files.
