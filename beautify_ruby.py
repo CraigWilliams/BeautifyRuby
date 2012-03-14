@@ -42,7 +42,7 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
   def cmd(self):
     ruby_script  = self.ruby_script()
     tab_or_space = self.tab_or_space_setting()
-    return "/usr/bin/ruby '" + ruby_script + "' '" + tab_or_space + "'" + " '" + unicode(self.filename) + "'"
+    return "/usr/bin/env ruby '" + ruby_script + "' '" + tab_or_space + "'" + " '" + unicode(self.filename) + "'"
 
   def is_ruby_file(self, fname):
     patterns = re.compile(r'\.rb|\.rake')
