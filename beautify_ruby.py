@@ -9,12 +9,14 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     fname         = os.path.basename(self.filename)
 
     if self.is_ruby_file(fname):
+      self.get_selection_position()
       self.save_document_if_dirty()
 
       beautified   = os.popen(self.cmd()).read()
 
       self.update_view(beautified.decode('utf8'))
       self.view.run_command('save')
+      self.reset_selection_position()
     else:
       sublime.error_message("This is not a Ruby file.")
 
@@ -22,11 +24,24 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     return os.path.join(sublime.packages_path(), 'BeautifyRuby', 'ruby', 'beautifier.rb')
 
   def update_view(self, contents):
-    body = self.view.window().active_view().substr(sublime.Region(0, self.view.window().active_view().size()))
-    edit = self.view.window().active_view().begin_edit()
-    self.view.window().active_view().erase(edit, sublime.Region(0, self.view.window().active_view().size()))
-    self.view.window().active_view().insert(edit, 0, contents)
-    self.view.window().active_view().end_edit(edit)
+    active_view = self.view.window().active_view()
+    body = active_view.substr(sublime.Region(0, active_view.size()))
+    edit = active_view.begin_edit()
+    active_view.erase(edit, sublime.Region(0, active_view.size()))
+    active_view.insert(edit, 0, contents)
+    active_view.end_edit(edit)
+
+  def reset_selection_position(self):
+    self.view.sel().clear()
+    self.view.sel().add(self.region)
+    self.view.show_at_center(self.region)
+
+  def get_selection_position(self):
+    sel         = self.view.sel()[0].begin()
+    pos         = self.view.rowcol(sel)
+    target      = self.view.text_point(pos[0], 0)
+    self.region = sublime.Region(target)
+
 
   def save_document_if_dirty(self):
     if self.view.is_dirty():
