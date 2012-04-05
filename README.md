@@ -1,4 +1,7 @@
 #Update
+  2012-04-05
+
+  Now handles ruby interpreter configuration under settings
 
   2012-02-03
 
@@ -36,6 +39,15 @@ I made very little modification to get it to work with a Sublime Text 2 plugin.
   ctrl + cmd + k
 ```
 
+If your file turns blank you can configure your ruby interpreter under Preferences -> Package Settings -> BeautifiRuby -> Settings Default
+
+I do
+
+```
+  which ruby
+```
+
+and place that in the ruby setting.
 
 # Installation
 
