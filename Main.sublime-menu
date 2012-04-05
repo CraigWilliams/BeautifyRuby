@@ -6,5 +6,31 @@
             {"id": "wrap"},
             { "command": "beautify_ruby" }
         ]
+    },
+    {
+        "id": "preferences",
+        "children":
+        [
+            {
+                "caption": "Package Settings",
+                "mnemonic": "P",
+                "id": "package-settings",
+                "children":
+                [
+                    {
+                        "caption": "BeautifyRuby",
+                        "children":
+                        [
+                           {
+                                "command": "open_file",
+                                "args": {"file": "${packages}/BeautifyRuby/BeautifyRuby.sublime-settings"},
+                                "caption": "Settings – Default"
+                            },
+                            { "caption": "-" }
+                        ]
+                    }
+                ]
+            }
+        ]
     }
 ]
