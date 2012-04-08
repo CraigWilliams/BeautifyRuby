@@ -1,4 +1,16 @@
 #Update
+  2012-04-08
+  Now aligns arguments within parens "()" on multiple lines.
+  eg.
+
+  ```ruby
+    calling_a_method(
+      arg_one,
+      arg_two,
+      etc
+    )
+  ```
+
   2012-04-05
 
   Now handles ruby interpreter configuration under settings
