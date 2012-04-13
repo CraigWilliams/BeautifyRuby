@@ -154,6 +154,7 @@ end
 
 tab_or_space = ARGV.first
 path         = ARGV.last
+path.gsub!("\\", "/") if RUBY_PLATFORM =~ /mswin/
 contents     = IO.read(path)
 
 if tab_or_space == 'space'
