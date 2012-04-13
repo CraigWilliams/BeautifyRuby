@@ -61,6 +61,12 @@ I do
 
 and place that in the ruby setting.
 
+On windows set Preferences -> Package Settings -> BeautifiRuby -> Settings Default to
+
+```
+  "ruby": "ruby"
+```
+
 # Installation
 
 ### Package Control
