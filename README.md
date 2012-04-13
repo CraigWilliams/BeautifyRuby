@@ -51,7 +51,7 @@ I made very little modification to get it to work with a Sublime Text 2 plugin.
   ctrl + cmd + k on OS X, or ctrl + alt + k on Windows
 ```
 
-If your file turns blank you can configure your ruby interpreter under Preferences -> Package Settings -> BeautifiRuby -> Settings Default
+If your file turns blank you can configure your ruby interpreter under Preferences -> Package Settings -> BeautifyRuby -> Settings Default
 
 I do
 
@@ -61,7 +61,7 @@ I do
 
 and place that in the ruby setting.
 
-On windows, set Preferences -> Package Settings -> BeautifiRuby -> Settings Default
+On windows, set Preferences -> Package Settings -> BeautifyRuby -> Settings Default
 
 ```
   "ruby": "ruby"
