@@ -48,7 +48,7 @@ I made very little modification to get it to work with a Sublime Text 2 plugin.
 ### Key Binding
 
 ```
-  ctrl + cmd + k
+  ctrl + cmd + k on OS X, or ctrl + shift + k on Windows
 ```
 
 If your file turns blank you can configure your ruby interpreter under Preferences -> Package Settings -> BeautifiRuby -> Settings Default
