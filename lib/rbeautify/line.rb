@@ -1,15 +1,13 @@
 module RBeautify
   class Line
 
-    # indent_character
-    @@indent_character = " "
+    attr_reader :language, :content, :line_number, :original_block, :block, :indent_character
 
-    attr_reader :language, :content, :line_number, :original_block, :block
-
-    def initialize(language, content, line_number, original_block = nil)
+    def initialize(language, content, line_number, original_block = nil, use_tabs = false)
       @language = language
       @content = content
       @original_block = original_block
+      @indent_character = use_tabs ? "\t" : "  "
       @block = BlockMatcher.parse(language, original_block, line_number, stripped, 0)
     end
 
@@ -44,7 +42,7 @@ module RBeautify
     end
 
     def tab_string
-      @@indent_character * indent_size
+      indent_character * (indent_size / 2 )
     end
 
     def stripped
