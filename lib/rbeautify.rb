@@ -70,6 +70,7 @@ module RBeautify
     source = File.read( path)
     dest = beautify_string(:ruby, source, use_tabs)
     STDOUT.write(dest)
+    STDOUT.flush
   end # beautify_sublime
 
   def self.main
