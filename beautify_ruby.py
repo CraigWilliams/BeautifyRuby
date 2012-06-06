@@ -12,8 +12,6 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
       self.get_selection_position()
       self.save_document_if_dirty()
 
-      sublime.error_message(self.cmd())
-
       beautified   = os.popen(self.cmd()).read()
 
       self.update_view(beautified.decode('utf8'))
