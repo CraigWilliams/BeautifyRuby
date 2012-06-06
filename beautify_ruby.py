@@ -51,7 +51,7 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
       return tab_or_space
 
   def cmd(self):
-    ruby_script  = os.path.join(sublime.packages_path(), 'BeautifyRubyNew', 'lib', 'rbeautify.rb')
+    ruby_script  = os.path.join(sublime.packages_path(), 'BeautifyRuby', 'lib', 'rbeautify.rb')
     tab_or_space = self.tab_or_space_setting()
     ruby_interpreter = self.settings.get('ruby') or "/usr/bin/env ruby"
     command = ruby_interpreter + " '" + ruby_script + "' '" + tab_or_space + "'" + " '" + unicode(self.filename) + "'"

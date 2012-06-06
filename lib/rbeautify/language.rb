@@ -1,5 +1,4 @@
 module RBeautify
-
   class Language
 
     @@languages = {}
@@ -35,5 +34,4 @@ module RBeautify
     end
 
   end
-
 end
