@@ -30,7 +30,7 @@ require File.dirname(__FILE__) + '/rbeautify/config/ruby.rb'
 
 module RBeautify
 
-  def RBeautify.beautify_string(language, source, use_tabs=false)
+  def self.beautify_string(language, source, use_tabs=false)
     dest = ""
     block = nil
 
@@ -47,7 +47,7 @@ module RBeautify
     return dest
   end
 
-  def RBeautify.beautify_file(path, backup = false)
+  def self.beautify_file(path, backup = false)
     if(path == '-') # stdin source
       source = STDIN.read
       print beautify_string(:ruby, source)
@@ -66,20 +66,20 @@ module RBeautify
     end
   end # beautify_file
 
-  def RBeautify.beautify_sublime(path, use_tabs)
+  def self.beautify_sublime(path, use_tabs)
     source = File.read( path)
-    dest = RBeautify.beautify_string(:ruby, source, use_tabs)
+    dest = beautify_string(:ruby, source, use_tabs)
     STDOUT.write(dest)
   end # beautify_sublime
 
-  def RBeautify.main
+  def self.main
     if(!ARGV[0])
       STDERR.puts "usage: Ruby filenames or \"-\" for stdin."
       exit 0
     elsif(ARGV[0] =~ /^space$|^tab$/) # called from Sublime Text 2
-      RBeautify.beautify_sublime(ARGV[1], ARGV[0] == 'tab')
+      beautify_sublime(ARGV[1], ARGV[0] == 'tab')
     else # called from commandline
-      ARGV.each { |path| RBeautify.beautify_file(path) }
+      ARGV.each { |path| beautify_file(path) }
     end
   end # main
 
