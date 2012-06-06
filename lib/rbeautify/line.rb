@@ -42,7 +42,7 @@ module RBeautify
     end
 
     def tab_string
-      indent_character * (indent_size / 2 )
+      indent_character * (indent_size / 2 ) + (indent_size.odd? ? ' ' : '')
     end
 
     def stripped
