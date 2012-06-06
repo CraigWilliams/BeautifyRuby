@@ -20,9 +20,6 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     else:
       sublime.error_message("This is not a Ruby file.")
 
-  def ruby_script(self):
-    return os.path.join(sublime.packages_path(), 'BeautifyRuby', 'ruby', 'beautifier.rb')
-
   def update_view(self, contents):
     active_view = self.view.window().active_view()
     body = active_view.substr(sublime.Region(0, active_view.size()))
@@ -42,7 +39,6 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     target      = self.view.text_point(pos[0], 0)
     self.region = sublime.Region(target)
 
-
   def save_document_if_dirty(self):
     if self.view.is_dirty():
       self.view.run_command('save')
@@ -54,14 +50,10 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     else:
       return tab_or_space
 
-  def get_ruby_interpreter(self):
-    return self.settings.get('ruby')
-
   def cmd(self):
-    ruby_script  = self.ruby_script()
+    ruby_script  = os.path.join(sublime.packages_path(), 'BeautifyRuby', 'lib', 'rbeautify.rb')
     tab_or_space = self.tab_or_space_setting()
-    ruby_interpreter = self.get_ruby_interpreter()
-    ruby_interpreter = ruby_interpreter or "/usr/bin/env ruby"
+    ruby_interpreter = self.settings.get('ruby') or "/usr/bin/env ruby"
     command = ruby_interpreter + " '" + ruby_script + "' '" + tab_or_space + "'" + " '" + unicode(self.filename) + "'"
     return command
 
