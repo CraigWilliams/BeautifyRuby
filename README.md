@@ -1,4 +1,12 @@
 #Update
+
+  2012-09-30
+  @danryan adds file_patterns to settings file. Thanks!
+  
+  ```ruby
+  "file_patterns": [ ".rb", ".rake", "Gemfile", "Rakefile" ]
+  ```
+  
   2012-04-08
   Now aligns arguments within parens "()" on multiple lines.
   eg.
