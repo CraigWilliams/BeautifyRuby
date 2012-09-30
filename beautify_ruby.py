@@ -58,7 +58,8 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     return command
 
   def is_ruby_file(self, fname):
-    patterns = re.compile(r'\.rb|\.rake')
+    file_patterns = self.settings.get('file_patterns') or ['.rb', '.rake']
+    patterns = re.compile(r'\b(?:%s)\b' % '|'.join(file_patterns))
     if patterns.search(fname):
       return True
     else:
