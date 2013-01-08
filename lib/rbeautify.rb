@@ -47,13 +47,13 @@ module RBeautify
     return dest
   end
 
-  def self.beautify_file(path, backup = false)
+  def self.beautify_file(path, backup = false, use_tabs = false)
     if(path == '-') # stdin source
       source = STDIN.read
-      print beautify_string(:ruby, source)
+      print beautify_string(:ruby, source, use_tabs)
     else # named file source
       source = File.read(path)
-      dest = beautify_string(:ruby, source)
+      dest = beautify_string(:ruby, source, use_tabs)
       if(source != dest)
         if backup
           # make a backup copy
@@ -66,21 +66,14 @@ module RBeautify
     end
   end # beautify_file
 
-  def self.beautify_sublime(path, use_tabs)
-    source = File.read( path)
-    dest = beautify_string(:ruby, source, use_tabs)
-    STDOUT.write(dest)
-    STDOUT.flush
-  end # beautify_sublime
-
   def self.main
     if(!ARGV[0])
       STDERR.puts "usage: Ruby filenames or \"-\" for stdin."
       exit 0
-    elsif(ARGV[0] =~ /^space$|^tab$/) # called from Sublime Text 2
-      beautify_sublime(ARGV[1], ARGV[0] == 'tab')
-    else # called from commandline
-      ARGV.each { |path| beautify_file(path) }
+    else
+      use_tabs = (ARGV[0] =~ /^-t$/)
+      ARGV.shift if use_tabs
+      ARGV.each { |path| beautify_file(path, true, use_tabs) }
     end
   end # main
 

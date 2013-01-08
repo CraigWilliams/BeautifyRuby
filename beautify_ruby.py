@@ -1,32 +1,46 @@
 import os.path
-from os import popen
 import sublime, sublime_plugin, sys, re
+import subprocess
+
+class BeautifyRubyOnSave(sublime_plugin.EventListener):
+  def on_pre_save(self, view):
+    self.settings = sublime.load_settings('BeautifyRuby.sublime-settings')
+    if self.settings.get('run_on_save'):
+      view.run_command("beautify_ruby", {"save": False, "error": False})
 
 class BeautifyRubyCommand(sublime_plugin.TextCommand):
-  def run(self, edit):
+  def run(self, edit, error=True, save=True):
     self.settings = sublime.load_settings('BeautifyRuby.sublime-settings')
-    self.filename = self.view.window().active_view().file_name()
-    fname         = os.path.basename(self.filename)
-
-    if self.is_ruby_file(fname):
+    if self.is_ruby_file():
+      save = save and self.settings.get('save_on_beautify')
       self.get_selection_position()
-      self.save_document_if_dirty()
-
-      beautified   = os.popen(self.cmd()).read()
-
-      self.update_view(beautified.decode('utf8'))
-      self.view.run_command('save')
+      self.active_view = self.view.window().active_view()
+      self.buffer_region = sublime.Region(0, self.active_view.size())
+      # self.beautify_file()
+      # self.view.window().run_command('refresh')
+      self.update_view(self.beautify_buffer())
+      if save:
+        self.view.run_command('save')
       self.reset_selection_position()
     else:
-      sublime.error_message("This is not a Ruby file.")
+      if error:
+        sublime.error_message("This is not a Ruby file.")
+
+  def beautify_file(self):
+    save_document_if_dirty(self)
+    subprocess.Popen(self.cmd(self.filename))
+
+  def beautify_buffer(self):
+    beautifier = subprocess.Popen(self.cmd(), shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    body = self.active_view.substr(self.buffer_region)
+    out = beautifier.communicate(body)
+    return out[0].decode('utf8')
 
   def update_view(self, contents):
-    active_view = self.view.window().active_view()
-    body = active_view.substr(sublime.Region(0, active_view.size()))
-    edit = active_view.begin_edit()
-    active_view.erase(edit, sublime.Region(0, active_view.size()))
-    active_view.insert(edit, 0, contents)
-    active_view.end_edit(edit)
+    edit = self.view.begin_edit()
+    self.view.erase(edit, self.buffer_region)
+    self.view.insert(edit, 0, contents)
+    self.view.end_edit(edit)
 
   def reset_selection_position(self):
     self.view.sel().clear()
@@ -43,21 +57,18 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     if self.view.is_dirty():
       self.view.run_command('save')
 
-  def tab_or_space_setting(self):
-    tab_or_space = self.settings.get('tab_or_space')
-    if tab_or_space == '':
-      return 'space'
-    else:
-      return tab_or_space
-
-  def cmd(self):
-    ruby_script  = os.path.join(sublime.packages_path(), 'BeautifyRuby', 'lib', 'rbeautify.rb')
-    tab_or_space = self.tab_or_space_setting()
+  def cmd(self, path = "-"):
     ruby_interpreter = self.settings.get('ruby') or "/usr/bin/env ruby"
-    command = ruby_interpreter + " '" + ruby_script + "' '" + tab_or_space + "'" + " '" + unicode(self.filename) + "'"
+    ruby_script  = os.path.join(sublime.packages_path(), 'BeautifyRuby', 'lib', 'rbeautify.rb')
+    args = ["'" + unicode(path) + "'"]
+    if self.settings.get('tab_or_space') != "space":
+      args.insert(0, '-t')
+    command = ruby_interpreter + " '" + ruby_script + "' " + ' '.join(args)
     return command
 
-  def is_ruby_file(self, fname):
+  def is_ruby_file(self):
+    self.filename = self.view.window().active_view().file_name()
+    fname         = os.path.basename(self.filename)
     file_patterns = self.settings.get('file_patterns') or ['.rb', '.rake']
     patterns = re.compile(r'\b(?:%s)\b' % '|'.join(file_patterns))
     if patterns.search(fname):

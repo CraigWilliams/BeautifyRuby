@@ -4,5 +4,7 @@
   // anything else will use one tab character
   "tab_or_space": "space",
   "ruby": "/usr/bin/env ruby",
-  "file_patterns": [ ".rb", ".rake" ]
+  "file_patterns": [ ".rb", ".rake", "Rakefile", "Gemfile" ],
+  "run_on_save": false,
+  "save_on_beautify": true
 }
