@@ -31,10 +31,15 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     subprocess.Popen(self.cmd(self.filename))
 
   def beautify_buffer(self):
-    beautifier = subprocess.Popen(self.cmd(), shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    working_dir = os.path.dirname(self.filename)
     body = self.active_view.substr(self.buffer_region)
-    out = beautifier.communicate(body)
-    return out[0].decode('utf8')
+    beautifier = subprocess.Popen(self.cmd(), shell=True, cwd=working_dir, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    out = beautifier.communicate(body)[0].decode('utf8')
+    if (out == "" and body != ""):
+      sublime.error_message("check your ruby interpreter settings")
+      return body
+    else:
+      return out
 
   def update_view(self, contents):
     edit = self.view.begin_edit()
@@ -59,19 +64,29 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
 
   def cmd(self, path = "-"):
     ruby_interpreter = self.settings.get('ruby') or "/usr/bin/env ruby"
-    ruby_script  = os.path.join(sublime.packages_path(), 'BeautifyRuby', 'lib', 'rbeautify.rb')
+    if self.is_erb_file():
+      script_name = 'erbbeautify.rb'
+    else:
+      script_name = 'rbeautify.rb'
+    ruby_script  = os.path.join(sublime.packages_path(), 'BeautifyRuby', 'lib', script_name)
     args = ["'" + unicode(path) + "'"]
     if self.settings.get('tab_or_space') != "space":
       args.insert(0, '-t')
     command = ruby_interpreter + " '" + ruby_script + "' " + ' '.join(args)
     return command
 
+  def is_erb_file(self):
+    if re.search("\.html\.erb", self.fname):
+      return True
+    else:
+      return False
+
   def is_ruby_file(self):
     self.filename = self.view.window().active_view().file_name()
-    fname         = os.path.basename(self.filename)
+    self.fname         = os.path.basename(self.filename)
     file_patterns = self.settings.get('file_patterns') or ['.rb', '.rake']
     patterns = re.compile(r'\b(?:%s)\b' % '|'.join(file_patterns))
-    if patterns.search(fname):
+    if patterns.search(self.fname):
       return True
     else:
       return False
