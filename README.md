@@ -60,7 +60,7 @@ Beautifies Ruby code. This plugin uses the [Ruby Script Beautifier](http://www.a
 
 I made very little modification to get it to work with a Sublime Text 2 plugin.
 
-Erb html templates uses [Paul Beatley's htmlbeautify gem](https://github.com/threedaymonk/htmlbeautifier). This (as well as rubygems) is assumed to be installed as seen by the ruby interpreter. 
+Erb html templates uses [Paul Battley's htmlbeautify gem](https://github.com/threedaymonk/htmlbeautifier). This (as well as rubygems) is assumed to be installed as seen by the ruby interpreter. 
 
 This package offers a pre-save hook, i.e., your ruby and erb files will be reformatted automatically before saving. To activate this feature, set:
 
