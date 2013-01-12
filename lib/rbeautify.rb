@@ -29,6 +29,16 @@ require File.dirname(__FILE__) + '/rbeautify/line.rb'
 require File.dirname(__FILE__) + '/rbeautify/config/ruby.rb'
 
 module RBeautify
+  AVAILABLE_LINE_ENDINGS = %w(CR Unix Windows)
+  @@selected_line_ending = AVAILABLE_LINE_ENDINGS[1]
+
+  def self.line_ending
+    case @@selected_line_ending
+    when AVAILABLE_LINE_ENDINGS[1] then "\n"
+    when AVAILABLE_LINE_ENDINGS[2] then "\r\n"
+    else "\r"
+    end
+  end
 
   def self.beautify_string(language, source, use_tabs=false)
     dest = ""
@@ -38,9 +48,9 @@ module RBeautify
       language = RBeautify::Language.language(language)
     end
 
-    source.split("\n").each_with_index do |line_content, line_number|
+    source.split(self.line_ending).each_with_index do |line_content, line_number|
       line = RBeautify::Line.new(language, line_content, line_number, block, use_tabs)
-      dest += line.format + "\n"
+      dest += line.format + self.line_ending
       block = line.block
     end
 
@@ -73,6 +83,10 @@ module RBeautify
     else
       use_tabs = (ARGV[0] =~ /^-t$/)
       ARGV.shift if use_tabs
+      if ARGV.size > 0 && AVAILABLE_LINE_ENDINGS.include?(ARGV[0])
+        @@selected_line_ending = ARGV[0]
+        ARGV.shift
+      end
       ARGV.each { |path| beautify_file(path, true, use_tabs) }
     end
   end # main
