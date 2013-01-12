@@ -5,13 +5,15 @@ import subprocess
 class BeautifyRubyOnSave(sublime_plugin.EventListener):
   def on_pre_save(self, view):
     self.settings = sublime.load_settings('BeautifyRuby.sublime-settings')
-    if self.settings.get('run_on_save'):
+    run_on_save = self.settings.get('run_on_save') or False
+    if run_on_save:
       view.run_command("beautify_ruby", {"save": False, "error": False})
 
 class BeautifyRubyCommand(sublime_plugin.TextCommand):
   def run(self, edit, error=True, save=True):
     self.settings = sublime.load_settings('BeautifyRuby.sublime-settings')
     if self.is_ruby_file():
+      self.line_endings = self.view.line_endings()
       save = save and self.settings.get('save_on_beautify')
       self.get_selection_position()
       self.active_view = self.view.window().active_view()
@@ -70,7 +72,9 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
       script_name = 'rbeautify.rb'
     ruby_script  = os.path.join(sublime.packages_path(), 'BeautifyRuby', 'lib', script_name)
     args = ["'" + unicode(path) + "'"]
-    if self.settings.get('tab_or_space') != "space":
+    tabs_or_space = self.settings.get('tab_or_space') or "space"
+    args.insert(0, self.line_endings)
+    if tabs_or_space != "space":
       args.insert(0, '-t')
     command = ruby_interpreter + " '" + ruby_script + "' " + ' '.join(args)
     return command
