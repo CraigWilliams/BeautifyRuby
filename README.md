@@ -1,6 +1,15 @@
 
 #Update
 
+  2013-04-01
+  Updated to work with Sublime Text 3
+  Continue using in ST2 as usual using Package Control.
+
+  To install in ST3, clone the repo and copy the "BeautifyRuby"
+  folder into the "Packages" folder.
+
+  Restart ST3
+
   2013-01-11
   @zelig adds erb template support
 
@@ -9,11 +18,11 @@
 
   2012-09-30
   @danryan adds file_patterns to settings file. Thanks!
-  
+
   ```ruby
   "file_patterns": [ ".rb", ".rake", "Gemfile", "Rakefile" ]
   ```
-  
+
   2012-04-08
   Now aligns arguments within parens "()" on multiple lines.
   eg.
@@ -60,7 +69,7 @@ Beautifies Ruby code. This plugin uses the [Ruby Script Beautifier](http://www.a
 
 I made very little modification to get it to work with a Sublime Text 2 plugin.
 
-Erb html templates uses [Paul Battley's htmlbeautifier gem](https://github.com/threedaymonk/htmlbeautifier). This (as well as rubygems) is assumed to be installed as seen by the ruby interpreter. 
+Erb html templates uses [Paul Battley's htmlbeautifier gem](https://github.com/threedaymonk/htmlbeautifier). This (as well as rubygems) is assumed to be installed as seen by the ruby interpreter.
 
 This package offers a pre-save hook, i.e., your ruby and erb files will be reformatted automatically before saving. To activate this feature, set:
 
@@ -72,7 +81,7 @@ The sublime command "beautify_ruby" performs a save after formatting. You can di
 
 You can change the file patterns handled by this plugin in the settings:
 
-    "file_patterns": [ "\\.html\\.erb", "\\.rb", "\\.rake", "Rakefile", "Gemfile" ],   
+    "file_patterns": [ "\\.html\\.erb", "\\.rb", "\\.rake", "Rakefile", "Gemfile" ],
 
 
 ### Key Binding
