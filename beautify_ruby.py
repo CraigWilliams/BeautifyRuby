@@ -2,6 +2,17 @@ import os.path
 import sublime, sublime_plugin, sys, re
 import subprocess
 
+class PerformEditCommand(sublime_plugin.TextCommand):
+  def run(self, edit, data):
+    edit = edit
+    size = self.view.size()
+    region = sublime.Region(0, size)
+    self.view.replace(edit, region, data)
+
+  def is_enabled(self):
+        return True
+
+
 class BeautifyRubyOnSave(sublime_plugin.EventListener):
   def on_pre_save(self, view):
     self.settings = sublime.load_settings('BeautifyRuby.sublime-settings')
@@ -16,9 +27,8 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
       self.get_selection_position()
       self.active_view = self.view.window().active_view()
       self.buffer_region = sublime.Region(0, self.active_view.size())
-      # self.beautify_file()
-      # self.view.window().run_command('refresh')
-      self.update_view(self.beautify_buffer())
+      self.view.run_command("perform_edit", { "data":self.beautify_buffer() } )
+
       if save:
         self.view.run_command('save')
       self.reset_selection_position()
@@ -41,16 +51,11 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     else:
       return out
 
-  def update_view(self, contents):
-    edit = self.view.begin_edit()
-    self.view.erase(edit, self.buffer_region)
-    self.view.insert(edit, 0, contents)
-    self.view.end_edit(edit)
-
   def reset_selection_position(self):
-    self.view.sel().clear()
-    self.view.sel().add(self.region)
-    self.view.show_at_center(self.region)
+    if sublime.version() < '3':
+      self.view.sel().clear()
+      self.view.sel().add(self.region)
+      self.view.show_at_center(self.region)
 
   def get_selection_position(self):
     sel         = self.view.sel()[0].begin()
@@ -69,7 +74,7 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     else:
       script_name = 'rbeautify.rb'
     ruby_script  = os.path.join(sublime.packages_path(), 'BeautifyRuby', 'lib', script_name)
-    args = ["'" + unicode(path) + "'"]
+    args = ["'" + str(path) + "'"]
     if self.settings.get('tab_or_space') != "space":
       args.insert(0, '-t')
     command = ruby_interpreter + " '" + ruby_script + "' " + ' '.join(args)
