@@ -81,7 +81,9 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     return command
 
   def is_erb_file(self):
-    if re.search("\.html\.erb", self.fname):
+    file_patterns = self.settings.get('html_erb_patterns') or ["\.html\.erb"]
+    patterns = re.compile(r'\b(?:%s)\b' % '|'.join(file_patterns))
+    if patterns.search(self.fname):
       return True
     else:
       return False
@@ -90,6 +92,8 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     self.filename = self.view.window().active_view().file_name()
     self.fname         = os.path.basename(self.filename)
     file_patterns = self.settings.get('file_patterns') or ['.rb', '.rake']
+    if self.settings.get('html_erb_patterns'):
+      file_patterns  = file_patterns + self.settings.get('html_erb_patterns')
     patterns = re.compile(r'\b(?:%s)\b' % '|'.join(file_patterns))
     if patterns.search(self.fname):
       return True
