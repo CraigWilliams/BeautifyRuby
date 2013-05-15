@@ -62,6 +62,13 @@ unless RBeautify::Language.language(:ruby)
                    /(((^|;|\s)end)|#{continue_statement_boundary}(rescue|ensure))\b/,
                    :nest_except => [:double_quote, :regex, :backtick])
 
+  ruby.add_matcher(:visibility,
+                   /(private|protected|public)\s*$/,
+                   /(private|protected|public)\s*$/,
+                   :nest_except => [:double_quote, :regex, :backtick],
+                   :end => :implicit,
+                   :end_can_also_be_start => true)
+
   ruby.add_matcher(:more,
                    /#{start_statement_boundary}(until|for|while)\b/,
                    /(((^|;|\s)end)|#{continue_statement_boundary}(rescue|ensure))\b/,
