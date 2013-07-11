@@ -1,4 +1,3 @@
-
 #Update
 
   2013-04-01
@@ -110,7 +109,7 @@ If you use project-specific rubies and gem sets managed with `rvm`, then simply 
 
       "ruby": "~/.rvm/bin/rvm-auto-ruby",
 
-and then the `htmlbeautify` gem is found even if it is only installed for this project.
+and then the `htmlbeautifier` gem is found even if it is only installed for this project.
 
 # Installation
 
