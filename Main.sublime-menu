@@ -27,6 +27,11 @@
                                 "caption": "Settings – Default"
                             },
                             {
+                                "command":  "open_file",
+                                "args":     { "file": "${packages}/User/BeautifyRuby.sublime-settings" },
+                                "caption":  "Settings - User"
+                            },
+                            {
                                 "command": "open_file",
                                 "args": {
                                     "file": "${packages}/BeautifyRuby/Default (Windows).sublime-keymap",
