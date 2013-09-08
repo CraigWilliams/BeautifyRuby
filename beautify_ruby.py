@@ -12,13 +12,6 @@ class PerformEditCommand(sublime_plugin.TextCommand):
   def is_enabled(self):
         return True
 
-
-class BeautifyRubyOnSave(sublime_plugin.EventListener):
-  def on_pre_save(self, view):
-    self.settings = sublime.load_settings('BeautifyRuby.sublime-settings')
-    if self.settings.get('run_on_save'):
-      view.run_command("beautify_ruby", {"save": False, "error": False})
-
 class BeautifyRubyCommand(sublime_plugin.TextCommand):
   def run(self, edit, error=True, save=True):
     self.settings = sublime.load_settings('BeautifyRuby.sublime-settings')
