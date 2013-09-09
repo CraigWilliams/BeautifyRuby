@@ -1,5 +1,14 @@
 # BeautifyRuby
 
+## Known Issue
+When enabling `run_on_save` and `save_on_focus_lost`
+
+If you have two files open and one of them has unsaved changes,
+if you switch from the file with changes to the file without changes,
+the file's content without changes will be copied into the file
+that has changes.
+
+
 Beautifies Ruby code. This plugin uses the [Ruby Script Beautifier](http://www.arachnoid.com/ruby/rubyBeautifier.html) written by P.Lotus
 
 I made very little modification to get it to work with a Sublime Text 2 plugin.
