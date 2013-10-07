@@ -45,6 +45,8 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     body = self.active_view.substr(self.buffer_region)
     beautifier = subprocess.Popen(self.cmd(), shell=True, cwd=working_dir, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     out = beautifier.communicate(body.encode("utf-8"))[0].decode('utf8')
+    out_array = out.splitlines()
+    out_final = "\n".join(out_array)
     if (out == "" and body != ""):
       sublime.error_message("check your ruby interpreter settings")
       return body
