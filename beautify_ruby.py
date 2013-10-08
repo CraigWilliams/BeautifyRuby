@@ -51,7 +51,7 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
       sublime.error_message("check your ruby interpreter settings")
       return body
     else:
-      return out
+      return out_final
 
   def reset_selection_position(self):
     if sublime.version() < '3':
