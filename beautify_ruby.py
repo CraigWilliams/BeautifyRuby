@@ -2,9 +2,6 @@ import os.path
 import sublime, sublime_plugin, sys, re
 import subprocess
 
-# PLUGIN_FOLDER = os.path.dirname(os.path.realpath(__file__))
-PLUGIN_FOLDER = os.path.join(sublime.packages_path(), 'BeautifyRuby')
-
 class BeautifyRubyOnSave(sublime_plugin.EventListener):
   def on_pre_save(self, view):
     self.settings = sublime.load_settings('BeautifyRuby.sublime-settings')
@@ -51,7 +48,7 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     else:
       script_name = 'rbeautify.rb'
     ruby_interpreter = self.settings.get('ruby') or "/usr/bin/env ruby"
-    ruby_script  = os.path.join(PLUGIN_FOLDER, 'lib', script_name)
+    ruby_script  = os.path.join(sublime.packages_path(), 'BeautifyRuby', 'lib', script_name)
     if not os.path.exists(ruby_script):
       msg = "script: '" + ruby_script + "' not found."
       raise Exception(msg)
