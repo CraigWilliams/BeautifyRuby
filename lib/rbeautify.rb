@@ -38,7 +38,7 @@ module RBeautify
       language = RBeautify::Language.language(language)
     end
 
-    source.split("\n").each_with_index do |line_content, line_number|
+    source.force_encoding("UTF-8").split("\n").each_with_index do |line_content, line_number|
       line = RBeautify::Line.new(language, line_content, line_number, block, use_tabs)
       dest += line.format + "\n"
       block = line.block
