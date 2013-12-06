@@ -16,7 +16,7 @@ module RBeautify
         if format?
           if stripped.length == 0
             @formatted = ""
-          elsif !content.match(/\s*?=/).nil?
+          elsif !content.match(/\s*?^=/).nil?
             @formatted = stripped
           else
             @formatted = tab_string + stripped
