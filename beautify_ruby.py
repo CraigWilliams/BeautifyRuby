@@ -64,6 +64,16 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
       text += "\n"
     return finalized_output
 
+  def config_params(self):
+    def create_parameter(name):
+      return ["'" + name + '=' + str(self.view.settings().get(name)) +"'"]
+
+    result = []
+    targets = ["tab_size"]
+    for target in targets:
+      result += create_parameter(target)
+    return result
+
   def load_settings(self):
     self.settings = sublime.load_settings('BeautifyRuby.sublime-settings')
 
