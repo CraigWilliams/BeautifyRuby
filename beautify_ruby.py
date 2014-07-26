@@ -52,7 +52,7 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     if not os.path.exists(ruby_script):
       msg = "script: '" + ruby_script + "' not found."
       raise Exception(msg)
-    args = ["'" + str(path) + "'"]
+    args = ["'" + str(path) + "'"] + self.config_params()
     if self.settings.get('tab_or_space') != "space":
       args.insert(0, '-t')
     return ruby_interpreter + " '" + ruby_script + "' " + ' '.join(args)
