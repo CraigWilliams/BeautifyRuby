@@ -66,7 +66,7 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
 
   def config_params(self):
     def create_parameter(name):
-      return ["'" + name + '=' + str(self.view.settings().get(name)) +"'"]
+      return ['--'+name.replace('_','-'), str(self.view.settings().get(name)) ]
 
     result = []
     targets = ["tab_size"]
