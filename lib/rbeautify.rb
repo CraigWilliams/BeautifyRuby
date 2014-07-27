@@ -30,7 +30,8 @@ require File.dirname(__FILE__) + '/rbeautify/config/ruby.rb'
 
 module RBeautify
 
-  def self.beautify_string(language, source, use_tabs=false)
+  def self.beautify_string(language, source, config)
+    use_tabs = config["translate_tabs_to_spaces"] == 'False'
     dest = ""
     block = nil
 
@@ -49,14 +50,13 @@ module RBeautify
 
   def self.beautify_file(path, config)
     backup = config["backup"] == 'True'
-    use_tabs = config["translate_tabs_to_spaces"] == 'False'
 
     if(path == '-') # stdin source
       source = STDIN.read
-      print beautify_string(:ruby, source, use_tabs)
+      print beautify_string(:ruby, source, config)
     else # named file source
       source = File.read(path)
-      dest = beautify_string(:ruby, source, use_tabs)
+      dest = beautify_string(:ruby, source, config)
       if(source != dest)
         if backup
           # make a backup copy
