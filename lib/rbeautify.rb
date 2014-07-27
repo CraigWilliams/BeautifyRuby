@@ -31,7 +31,6 @@ require File.dirname(__FILE__) + '/rbeautify/config/ruby.rb'
 module RBeautify
 
   def self.beautify_string(language, source, config)
-    use_tabs = config["translate_tabs_to_spaces"] == 'False'
     dest = ""
     block = nil
 
@@ -39,8 +38,11 @@ module RBeautify
       language = RBeautify::Language.language(language)
     end
 
+    language.indent_size = config["tab_size"].to_i
+
+
     source.force_encoding("UTF-8").split("\n").each_with_index do |line_content, line_number|
-      line = RBeautify::Line.new(language, line_content, line_number, block, use_tabs)
+      line = RBeautify::Line.new(language, line_content, line_number, block, config)
       dest += line.format + "\n"
       block = line.block
     end
