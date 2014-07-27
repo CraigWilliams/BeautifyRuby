@@ -47,7 +47,10 @@ module RBeautify
     return dest
   end
 
-  def self.beautify_file(path, backup = false, use_tabs = false)
+  def self.beautify_file(path, config)
+    backup = config["backup"] == 'True'
+    use_tabs = config["translate_tabs_to_spaces"] == 'False'
+
     if(path == '-') # stdin source
       source = STDIN.read
       print beautify_string(:ruby, source, use_tabs)
@@ -71,12 +74,19 @@ module RBeautify
       STDERR.puts "usage: Ruby filenames or \"-\" for stdin."
       exit 0
     else
-      use_tabs = (ARGV[0] =~ /^-t$/)
-      ARGV.shift if use_tabs
-      ARGV.each { |path| beautify_file(path, true, use_tabs) }
+      path = ARGV.shift
+      config = self.generate_config(ARGV)
+      beautify_file(path,config)
     end
   end # main
 
+  def self.generate_config args
+    result = {}
+    args.each_slice(2) do |parameter|
+      result[parameter.first.gsub('--','').gsub('-','_')] = parameter.last
+    end
+    result
+  end
 
 end # module RBeautify
 
