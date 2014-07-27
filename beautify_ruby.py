@@ -69,7 +69,7 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
       return ['--'+name.replace('_','-'), str(self.view.settings().get(name)) ]
 
     result = []
-    targets = ["tab_size","translate_tabs_to_spaces"]
+    targets = ["tab_size","translate_tabs_to_spaces",'default_line_ending']
     for target in targets:
       result += create_parameter(target)
     return result
