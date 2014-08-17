@@ -40,7 +40,7 @@ module RBeautify
 
     language.indent_size = config["tab_size"].to_i
 
-
+    
     source.force_encoding("UTF-8").split("\n").each_with_index do |line_content, line_number|
       line = RBeautify::Line.new(language, line_content, line_number, block, config)
       dest += line.format + "\n"
