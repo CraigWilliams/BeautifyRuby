@@ -48,14 +48,19 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
       script_name = 'erbbeautify.rb'
     else:
       script_name = 'rbeautify.rb'
+
     ruby_interpreter = self.settings.get('ruby') or self.which('ruby.exe') or self.which('ruby')
-    ruby_script  = os.path.join(sublime.packages_path(), 'BeautifyRuby', 'lib', script_name)
+    ruby_script = os.path.join(sublime.packages_path(), 'BeautifyRuby', 'lib', script_name)
+
     if not os.path.exists(ruby_script):
       msg = "script: '" + ruby_script + "' not found."
       raise Exception(msg)
+
     args = ["'" + str(path) + "'"] + self.config_params()
+
     if self.settings.get('tab_or_space') != "space":
       args.insert(0, '-t')
+
     return ruby_interpreter + " '" + ruby_script + "' " + ' '.join(args)
 
   def finalize_output(self, text):

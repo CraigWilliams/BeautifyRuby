@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper.rb'
+require_relative './../spec_helper.rb'
 
 describe RBeautify::BlockStart do
   before(:each) do
@@ -15,21 +15,11 @@ describe RBeautify::BlockStart do
         @unrelated = RBeautify::BlockStart.new(@ruby.matcher(:standard), nil, 0, 0, 'class', ' Bar')
       end
 
-      it {
-        expect(RBeautify::BlockStart.first_common_ancestor(@grand_parent, nil)).to eq(nil)
-      }
-      it {
-        expect(RBeautify::BlockStart.first_common_ancestor(@grand_parent, @unrelated)).to be_nil
-      }
-      it {
-        expect(RBeautify::BlockStart.first_common_ancestor(@grand_parent, @parent)).to eq(@grand_parent )
-      }
-      it {
-        expect(RBeautify::BlockStart.first_common_ancestor(@grand_parent, @first)).to eq(@grand_parent )
-      }
-      it {
-        expect(RBeautify::BlockStart.first_common_ancestor(@first, @second)).to eq(@parent)
-      }
+      it { expect(RBeautify::BlockStart.first_common_ancestor(@grand_parent, nil)).to eq(nil) }
+      it { expect(RBeautify::BlockStart.first_common_ancestor(@grand_parent, @unrelated)).to be_nil }
+      it { expect(RBeautify::BlockStart.first_common_ancestor(@grand_parent, @parent)).to eq(@grand_parent ) }
+      it { expect(RBeautify::BlockStart.first_common_ancestor(@grand_parent, @first)).to eq(@grand_parent ) }
+      it { expect(RBeautify::BlockStart.first_common_ancestor(@first, @second)).to eq(@parent) }
     end
   end
 

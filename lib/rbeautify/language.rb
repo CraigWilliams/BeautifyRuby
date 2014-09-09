@@ -30,7 +30,7 @@ module RBeautify
     end
 
     def matcher(name)
-      self.matchers.detect { |matcher| matcher.name == name}
+      matchers.detect { |matcher| matcher.name == name}
     end
 
   end

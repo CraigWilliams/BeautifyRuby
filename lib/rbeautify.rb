@@ -20,77 +20,75 @@
  ***************************************************************************/
 =end
 
-require File.dirname(__FILE__) + '/rbeautify/block_start.rb'
-require File.dirname(__FILE__) + '/rbeautify/block_end.rb'
-require File.dirname(__FILE__) + '/rbeautify/block_matcher.rb'
-require File.dirname(__FILE__) + '/rbeautify/language.rb'
-require File.dirname(__FILE__) + '/rbeautify/line.rb'
-
-require File.dirname(__FILE__) + '/rbeautify/config/ruby.rb'
+require_relative './rbeautify/block_start.rb'
+require_relative './rbeautify/block_end.rb'
+require_relative './rbeautify/block_matcher.rb'
+require_relative './rbeautify/language.rb'
+require_relative './rbeautify/line.rb'
+require_relative './rbeautify/config/ruby.rb'
 
 module RBeautify
 
-  def self.beautify_string(language, source, config)
-    dest = ""
-    block = nil
+  class << self
+    def beautify_string(language, source, config)
+      dest = ""
+      block = nil
 
-    unless language.is_a? RBeautify::Language
-      language = RBeautify::Language.language(language)
-    end
-
-    language.indent_size = config["tab_size"].to_i
-
-    
-    source.force_encoding("UTF-8").split("\n").each_with_index do |line_content, line_number|
-      line = RBeautify::Line.new(language, line_content, line_number, block, config)
-      dest += line.format + "\n"
-      block = line.block
-    end
-
-    return dest
-  end
-
-  def self.beautify_file(path, config)
-    backup = config["backup"] == 'True'
-
-    if(path == '-') # stdin source
-      source = STDIN.read
-      print beautify_string(:ruby, source, config)
-    else # named file source
-      source = File.read(path)
-      dest = beautify_string(:ruby, source, config)
-      if(source != dest)
-        if backup
-          # make a backup copy
-          File.open(path + "~","w") { |f| f.write(source) }
-        end
-        # overwrite the original
-        File.open(path,"w") { |f| f.write(dest) }
+      unless language.is_a? RBeautify::Language
+        language = RBeautify::Language.language(language)
       end
-      return source != dest
-    end
-  end # beautify_file
 
-  def self.main
-    if(!ARGV[0])
-      STDERR.puts "usage: Ruby filenames or \"-\" for stdin."
-      exit 0
-    else
-      path = ARGV.shift
-      config = self.generate_config(ARGV)
-      beautify_file(path,config)
-    end
-  end # main
+      language.indent_size = config["tab_size"].to_i
 
-  def self.generate_config args
-    result = {}
-    args.each_slice(2) do |parameter|
-      result[parameter.first.gsub('--','').gsub('-','_')] = parameter.last
+      source.force_encoding("UTF-8").split("\n").each_with_index do |line_content, line_number|
+        line = RBeautify::Line.new(language, line_content, line_number, block, config)
+        dest += line.format + "\n"
+        block = line.block
+      end
+
+      return dest
     end
-    result
+
+    def beautify_file(path, config)
+      backup = config["backup"] == 'True'
+
+      if(path == '-') # stdin source
+        source = STDIN.read
+        print beautify_string(:ruby, source, config)
+      else # named file source
+        source = File.read(path)
+        dest = beautify_string(:ruby, source, config)
+        if(source != dest)
+          if backup
+            # make a backup copy
+            File.open(path + "~","w") { |f| f.write(source) }
+          end
+          # overwrite the original
+          File.open(path,"w") { |f| f.write(dest) }
+        end
+        return source != dest
+      end
+    end
+
+    def main
+      if(!ARGV[0])
+        STDERR.puts "usage: Ruby filenames or \"-\" for stdin."
+        exit 0
+      else
+        path = ARGV.shift
+        config = generate_config(ARGV)
+        beautify_file(path,config)
+      end
+    end
+
+    def generate_config args
+      args.each_slice(2).with_object({}) do |parameter, result|
+        result[parameter.first.gsub('--','').gsub('-','_')] = parameter.last
+      end
+    end
+
   end
-
-end # module RBeautify
+end
 
 # if launched as a standalone program, not loaded as a module
 if __FILE__ == $0
