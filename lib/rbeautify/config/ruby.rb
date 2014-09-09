@@ -7,7 +7,7 @@ unless RBeautify::Language.language(:ruby)
   pre_keyword_boundary = '(^|[^a-z0-9A-Z:._])' # like \b but with : , . _ all added to list of exceptions
   start_statement_boundary = '(^|(;|=)\s*)'
   continue_statement_boundary = '(^|;\s*)'
-  ruby.indent_size = 2
+  ruby.indent_size ||= 2
 
   ruby.add_matcher(:program_end, /^__END__$/, false, :format_content => false, :parse_content => false)
 

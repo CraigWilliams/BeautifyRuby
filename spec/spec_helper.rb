@@ -110,6 +110,8 @@ def run_fixtures_for_language(language)
         output = fixture['output'] || input
         debug  = fixture['debug'] || false
 
+        config['tab_size'] = fixture.fetch('spaces', 2)
+
         if fixture['pending']
           next
           pending fixture['pending'] do

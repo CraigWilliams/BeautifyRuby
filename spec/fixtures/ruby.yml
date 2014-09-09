@@ -406,3 +406,14 @@
       baz unless foobaz
       Boo.new(:boo) rescue raise('Houston we have a problem')
     end
+
+- name: should use user specified 4 spaces
+  spaces: 4
+  input: |
+    def foo
+    h = {one: 'one'}
+    end
+  output: |
+    def foo
+        h = {one: 'one'}
+    end
