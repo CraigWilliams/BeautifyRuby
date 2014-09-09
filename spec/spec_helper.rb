@@ -1,4 +1,7 @@
-require 'pry'
+unless ENV['CI'] == true
+  require 'pry'
+end
+
 require 'yaml'
 require_relative './../lib/rbeautify.rb'
 
