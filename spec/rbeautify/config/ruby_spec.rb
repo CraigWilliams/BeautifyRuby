@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../spec_helper.rb'
+require_relative './../../spec_helper.rb'
 
 run_fixtures_for_language(:ruby)
 

@@ -1,12 +1,9 @@
-begin
-  require 'rspec'
-rescue LoadError
-  require 'rubygems'
-  require 'rspec'
+unless ENV['CI'] == true
+  require 'pry'
 end
-require 'pry'
+
 require 'yaml'
-require File.dirname(__FILE__) + '/../lib/rbeautify.rb'
+require_relative './../lib/rbeautify.rb'
 
 module RBeautifyMatchers
   # Adds more descriptive failure messages to the dynamic be_valid matcher
@@ -29,7 +26,7 @@ module RBeautifyMatchers
       "expected\n#{expected_string} but got\n#{got_string}"
     end
 
-    def negative_failure_message
+    def failure_message_when_negated
       "expected to be different from #{expected_string}"
     end
 
@@ -64,7 +61,7 @@ module RBeautifyMatchers
       "expected\n#{expected_string} but got\n#{got_string}"
     end
 
-    def negative_failure_message
+    def failure_message_when_negated
       "expected to be different from #{expected_string}"
     end
 
@@ -115,6 +112,8 @@ def run_fixtures_for_language(language)
         input  = fixture['input']
         output = fixture['output'] || input
         debug  = fixture['debug'] || false
+
+        config['tab_size'] = fixture.fetch('spaces', 2)
 
         if fixture['pending']
           next
