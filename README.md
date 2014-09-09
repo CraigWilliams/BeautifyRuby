@@ -1,3 +1,5 @@
+[ ![Codeship Status for CraigWilliams/BeautifyRuby](https://www.codeship.io/projects/09898c30-f89d-0130-ede5-7a7e050a0c1a/status)](https://www.codeship.io/projects/6700)
+
 # BeautifyRuby
 
 Beautifies Ruby code. This plugin uses the [Ruby Script Beautifier](http://www.arachnoid.com/ruby/rubyBeautifier.html) written by P.Lotus
