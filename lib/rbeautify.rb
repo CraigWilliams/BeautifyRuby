@@ -25,6 +25,7 @@ require_relative './rbeautify/block_end.rb'
 require_relative './rbeautify/block_matcher.rb'
 require_relative './rbeautify/language.rb'
 require_relative './rbeautify/line.rb'
+require_relative './rbeautify/tab_size.rb'
 require_relative './rbeautify/config/ruby.rb'
 
 module RBeautify
@@ -38,7 +39,8 @@ module RBeautify
         language = RBeautify::Language.language(language)
       end
 
-      language.indent_size = config["tab_size"].to_i
+      config['tab_size'] = RBeautify::TabSize.new(config).tab_size
+      language.indent_size = config['tab_size']
 
       source.force_encoding("UTF-8").split("\n").each_with_index do |line_content, line_number|
         line = RBeautify::Line.new(language, line_content, line_number, block, config)

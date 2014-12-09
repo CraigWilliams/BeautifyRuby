@@ -2,11 +2,17 @@
 
 # BeautifyRuby
 
-Beautifies Ruby code. This plugin uses the [Ruby Script Beautifier](http://www.arachnoid.com/ruby/rubyBeautifier.html) written by P.Lotus
-
-I made very little modification to get it to work with a Sublime Text 2 plugin.
-
 Erb html templates uses [Paul Battley's htmlbeautifier gem](https://github.com/threedaymonk/htmlbeautifier). This (as well as rubygems) is assumed to be installed as seen by the ruby interpreter. Note that if you beautify and erb file but `htmlbeautifier` is not found, the error message is 'check your ruby interpreter settings', do not be misled.
+
+### Interpreter settings
+
+If an error is encountered while processing the file, Python receives and empty string and the following message is displayed but may have nothing to do with your Ruby settings.
+
+```
+check your ruby interpreter settings
+```
+
+### Hooks
 
 This package offers a pre-save hook, i.e., your ruby and erb files will be reformatted automatically before saving. To activate this feature, set:
 
@@ -42,6 +48,22 @@ If you use project-specific rubies and gem sets managed with `rvm`, then simply 
       "ruby": "~/.rvm/bin/rvm-auto-ruby",
 
 and then the `htmlbeautifier` gem is found even if it is only installed for this project.
+
+### Tabs or Spaces
+
+By default, Sublime does not translate tabs to spaces. If you wish to use tabs you will not need to change your settings. If you wish to use spaces, add the following setting.
+
+```
+"translate_tabs_to_spaces": true
+```
+
+### Tab size
+
+Sublime's default `tab_size` is set to 4. Override this setting to change the number of spaces to use when using spaces instead of tabs.
+
+```
+"tab_size": 2
+```
 
 ### Key Binding
 

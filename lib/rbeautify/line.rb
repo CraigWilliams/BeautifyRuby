@@ -4,7 +4,7 @@ module RBeautify
     attr_reader :language, :content, :line_number, :original_block, :block, :indent_character
 
     def initialize(language, content, line_number, original_block = nil, config)
-      @tab_size = config["tab_size"].to_i
+      @tab_size = config["tab_size"]
       @use_tabs = config["translate_tabs_to_spaces"] == 'False'
       @language = language
       @content = content

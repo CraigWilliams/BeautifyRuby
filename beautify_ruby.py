@@ -11,6 +11,8 @@ class BeautifyRubyOnSave(sublime_plugin.EventListener):
 class BeautifyRubyCommand(sublime_plugin.TextCommand):
   def run(self, edit, error=True, save=True):
     self.load_settings()
+    self.view.settings().set('translate_tabs_to_spaces', self.settings.get('translate_tabs_to_spaces'))
+    self.view.settings().set('tab_size', self.settings.get('tab_size'))
     self.filename = self.view.file_name()
     self.fname = os.path.basename(self.filename)
     self.erb = self.is_erb_file()
@@ -57,9 +59,6 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
       raise Exception(msg)
 
     args = ["'" + str(path) + "'"] + self.config_params()
-
-    if self.settings.get('tab_or_space') != "space":
-      args.insert(0, '-t')
 
     return ruby_interpreter + " '" + ruby_script + "' " + ' '.join(args)
 
