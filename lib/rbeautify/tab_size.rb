@@ -1,6 +1,6 @@
 module RBeautify
   class TabSize
-    DEFAULT_TAB_SIZE = 6
+    DEFAULT_TAB_SIZE = 2
 
     def initialize(config)
       @tab_size = config['tab_size'].to_i
