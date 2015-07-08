@@ -73,7 +73,7 @@ unless RBeautify::Language.language(:ruby)
                    :nest_except => [:double_quote, :regex, :backtick])
 
   ruby.add_matcher(:if,
-                   /((#{start_statement_boundary}(if|unless))|#{continue_statement_boundary}(then|elsif|else))\b/,
+                   /((#{start_statement_boundary}(if|unless)(?!:))|#{continue_statement_boundary}(then|elsif|else))\b/,
                    /(((^|;|\s)end)|(#{continue_statement_boundary}(then|elsif|else)))\b/,
                    :nest_except => [:case, :double_quote, :regex, :backtick])
 
