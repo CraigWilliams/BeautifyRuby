@@ -39,6 +39,7 @@ describe 'Ruby' do
       it { expect(@matcher.parse_block_start('if foo', nil, 0, 0)).to be_block_start_like(:if, 0, 'if', ' foo') }
       it { expect(@matcher.parse_block_start('then foo = bar', nil, 0, 0)).to be_block_start_like(:if, 0, 'then', ' foo = bar') }
       it { expect(@matcher.parse_block_start('if_foo', nil, 0, 0)).to be_nil }
+      it { expect(@matcher.parse_block_start('if: foo', nil, 0, 0)).to be_nil }
 
       it { expect(@current_block.parse_block_end('end', 0)).to be_block_end_like(@current_block, 0, 'end', '') }
       it { expect(@current_block.parse_block_end('then', 0)).to be_block_end_like(@current_block, 0, 'then', '') }
