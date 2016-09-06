@@ -14,10 +14,8 @@ module ERBeautify
         path = ARGV.shift
         config = generate_config(ARGV)
         options = Hash.new
-        #https://github.com/threedaymonk/htmlbeautifier/pull/32 waiting on pull request, if is accepted  translate_tabs_to_spaces
-        #will start to work
-        translate_spaces_to_tabs = config['translate_tabs_to_spaces'] == 'False' ? { translate_spaces_to_tabs: true } : Hash.new
-        tab_size = config['tab_size'].to_i != 0 ? { tab_stops: config['tab_size'].to_i } : Hash.new
+        translate_spaces_to_tabs = config['translate_tabs_to_spaces'] == 'False' ? { indent: "\t" } : Hash.new
+        tab_size = (config['tab_size'].to_i != 0 and config['translate_tabs_to_spaces'] != 'False') ? { tab_stops: config['tab_size'].to_i } : Hash.new
         options = options.merge(tab_size).merge(translate_spaces_to_tabs)
         beautify $stdin.read.force_encoding('utf-8'), $stdout, options
       end
