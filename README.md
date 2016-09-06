@@ -57,6 +57,11 @@ By default, Sublime does not translate tabs to spaces. If you wish to use tabs y
 "translate_tabs_to_spaces": true
 ```
 
+Or if you wish to force the use of tabs use:
+
+```
+"translate_tabs_to_spaces": false
+```
 ### Tab size
 
 Sublime's default `tab_size` is set to 4. Override this setting to change the number of spaces to use when using spaces instead of tabs.
