@@ -19,7 +19,7 @@ unless RBeautify::Language.language(:ruby)
                    :parse_content => true,
                    :format_content => false,
                    :escape_character => true,
-                   :nest_except => [:double_quote, :single_quote, :regex, :back_tick, :percent])
+                   :nest_except => [:double_quote, :single_quote, :regex, :back_tick, :percent_square, :percent_curly, :percent_round])
 
   # NEED TO MODIFY DOUBLE QUOTE TO BE FORMATTED to get this to work
   ruby.add_matcher(:interpolation,
@@ -33,7 +33,7 @@ unless RBeautify::Language.language(:ruby)
                    :parse_content => false,
                    :format_content => false,
                    :escape_character => true,
-                   :nest_except => [:double_quote, :single_quote, :regex, :back_tick, :percent])
+                   :nest_except => [:double_quote, :single_quote, :regex, :back_tick, :percent_square, :percent_curly, :percent_round])
 
   ruby.add_matcher(:regex,
                    /(^|((,|=|~)\s*))\//, # Try to distinguish it from division sign
@@ -41,21 +41,35 @@ unless RBeautify::Language.language(:ruby)
                    :format_content => false,
                    :escape_character => true,
                    :end_can_also_be_start => false,
-                   :nest_except => [:double_quote, :single_quote, :regex, :back_tick, :percent])
+                   :nest_except => [:double_quote, :single_quote, :regex, :back_tick, :percent_square, :percent_curly, :percent_round])
 
   ruby.add_matcher(:back_tick,
                    /`/,
                    /`/,
                    :format_content => false,
                    :escape_character => true,
-                   :nest_except => [:double_quote, :single_quote, :regex, :back_tick, :percent])
+                   :nest_except => [:double_quote, :single_quote, :regex, :back_tick, :percent_square, :percent_curly, :percent_round])
 
-  ruby.add_matcher(:percent,
-                   /%\w\[/,
+  ruby.add_matcher(:percent_square,
+                   /%\w?\[/,
                    /\]/,
                    :format_content => false,
                    :escape_character => true,
-                   :nest_except => [:double_quote, :single_quote, :regex, :back_tick, :percent])
+                   :nest_except => [:double_quote, :single_quote, :regex, :back_tick, :percent_square, :percent_curly, :percent_round])
+  
+  ruby.add_matcher(:percent_curly,
+                   /%\w?\{/,
+                   /\}/,
+                   :format_content => false,
+                   :escape_character => true,
+                   :nest_except => [:double_quote, :single_quote, :regex, :back_tick, :percent_square, :percent_curly, :percent_round])
+  
+  ruby.add_matcher(:percent_round,
+                   /%\w?\(/,
+                   /\)/,
+                   :format_content => false,
+                   :escape_character => true,
+                   :nest_except => [:double_quote, :single_quote, :regex, :back_tick, :percent_square, :percent_curly, :percent_round])
 
   ruby.add_matcher(:standard,
                    /((#{start_statement_boundary}(module|class(?!:)|def))|#{pre_keyword_boundary}do)\b/,
@@ -126,13 +140,13 @@ unless RBeautify::Language.language(:ruby)
                    /$/,
                    :parse_content => false,
                    :format_content => false,
-                   :nest_except => [:double_quote, :single_quote, :regex, :back_tick, :percent])
+                   :nest_except => [:double_quote, :single_quote, :regex, :back_tick, :percent_square, :percent_curly, :percent_round])
 
   ruby.add_matcher(:continuing_line,
                    /(,|\.|\+|-|=\>|=|&&|\|\||\\|==|\s\?|:|<<)(\s*)?(#.*)?$/,
                    /(^|(,|\.|\+|-|=\>|=|&&|\|\||\\|==|\s\?|:|<<)(\s*)?)(#.*)?$/,
                    :indent_end_line => true,
                    :negate_ends_match => true,
-                   :nest_except => [:continuing_line, :curly_bracket, :round_bracket, :square_bracket, :double_quote, :single_quote, :regex, :back_tick, :percent])
+                   :nest_except => [:continuing_line, :curly_bracket, :round_bracket, :square_bracket, :double_quote, :single_quote, :regex, :back_tick, :percent_square, :percent_curly, :percent_round])
 
 end
