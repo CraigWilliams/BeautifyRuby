@@ -2,11 +2,11 @@
 
 # BeautifyRuby
 
-Erb html templates uses [Paul Battley's htmlbeautifier gem](https://github.com/threedaymonk/htmlbeautifier). This (as well as rubygems) is assumed to be installed as seen by the ruby interpreter. Note that if you beautify and erb file but `htmlbeautifier` is not found, the error message is 'check your ruby interpreter settings', do not be misled.
+Erb html templates uses [Paul Battley's htmlbeautifier gem](https://github.com/threedaymonk/htmlbeautifier). This (as well as rubygems) is assumed to be installed as seen by the ruby interpreter. Note that if you beautify an erb file but `htmlbeautifier` is not found, the error message is 'check your ruby interpreter settings', do not be misled.
 
 ### Interpreter settings
 
-If an error is encountered while processing the file, Python receives and empty string and the following message is displayed but may have nothing to do with your Ruby settings.
+If an error is encountered while processing the file, Python receives an empty string and the following message is displayed but may have nothing to do with your Ruby settings.
 
 ```
 check your ruby interpreter settings
