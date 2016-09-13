@@ -57,7 +57,7 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     if ruby_interpreter is None:
       msg = "ruby interpreter not found, set PATH environment variable or set ruby in settings"
       raise Exception(msg)
-      
+
     if not os.path.exists(ruby_script):
       msg = "script: '" + ruby_script + "' not found."
       raise Exception(msg)
