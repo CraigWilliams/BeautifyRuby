@@ -54,12 +54,16 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
     ruby_interpreter = self.settings.get('ruby') or self.which('ruby.exe') or self.which('ruby')
     ruby_script = os.path.join(sublime.packages_path(), 'BeautifyRuby', 'lib', script_name)
 
+    if ruby_interpreter is None:
+      msg = "ruby interpreter not found, set PATH environment variable or set ruby in settings"
+      raise Exception(msg)
+      
     if not os.path.exists(ruby_script):
       msg = "script: '" + ruby_script + "' not found."
       raise Exception(msg)
 
     args = ["'" + str(path) + "'"] + self.config_params()
-
+    
     return ruby_interpreter + " '" + ruby_script + "' " + ' '.join(args)
 
   def finalize_output(self, text):
