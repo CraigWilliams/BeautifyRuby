@@ -63,7 +63,7 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
       raise Exception(msg)
 
     args = ["'" + str(path) + "'"] + self.config_params()
-    
+
     return ruby_interpreter + " '" + ruby_script + "' " + ' '.join(args)
 
   def finalize_output(self, text):
