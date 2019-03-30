@@ -14,9 +14,19 @@ module ERBeautify
         path = ARGV.shift
         config = generate_config(ARGV)
         options = Hash.new
-        translate_spaces_to_tabs = config['translate_tabs_to_spaces'] == 'False' ? { indent: "\t" } : Hash.new
-        tab_size = (config['tab_size'].to_i != 0 and config['translate_tabs_to_spaces'] != 'False') ? { tab_stops: config['tab_size'].to_i } : Hash.new
-        options = options.merge(tab_size).merge(translate_spaces_to_tabs)
+
+        if config['translate_tabs_to_spaces'] == 'False'
+          options[:indent] = '\t'
+        end
+
+        if config['tab_size'].to_i != 0 and config['translate_tabs_to_spaces'] != 'False'
+          options[:tab_stops] = config['tab_size'].to_i
+        end
+
+        if config['keep_blank_lines'].to_i > 0
+          options[:keep_blank_lines] = config['keep_blank_lines'].to_i
+        end
+
         beautify $stdin.read.force_encoding('utf-8'), $stdout, options
       end
     end
