@@ -60,6 +60,10 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
 
     args = ["'" + str(path) + "'"] + self.config_params()
 
+    # Use translated path when wsl ruby
+    if self.settings.get('ruby') == 'wsl ruby':
+      ruby_script = subprocess.check_output("wsl wslpath '" + ruby_script + "'", shell=True).decode("utf-8").rstrip()
+
     return ruby_interpreter + " '" + ruby_script + "' " + ' '.join(args)
 
   def finalize_output(self, text):
