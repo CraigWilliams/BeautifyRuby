@@ -11,11 +11,14 @@ class BeautifyRubyOnSave(sublime_plugin.EventListener):
 class BeautifyRubyCommand(sublime_plugin.TextCommand):
   def run(self, edit, error=True, save=True):
     self.load_settings()
-    self.view.settings().set('translate_tabs_to_spaces', self.settings.get('translate_tabs_to_spaces'))
-    self.view.settings().set('tab_size', self.settings.get('tab_size'))
+
+    for s in ['translate_tabs_to_spaces', 'tab_size', 'keep_blank_lines']:
+      self.view.settings().set(s, self.settings.get(s))
+
     self.filename = self.view.file_name()
     self.fname = os.path.basename(self.filename)
     self.erb = self.is_erb_file()
+
     try:
       if self.erb or self.is_ruby_file():
         self.beautify_buffer(edit)
@@ -75,12 +78,13 @@ class BeautifyRubyCommand(sublime_plugin.TextCommand):
 
   def config_params(self):
     def create_parameter(name):
-      return ['--'+name.replace('_','-'), str(self.view.settings().get(name)) ]
+      return ['--'+name.replace('_','-'), str(self.view.settings().get(name))]
 
     result = []
-    targets = ["tab_size","translate_tabs_to_spaces",'default_line_ending']
+    targets = ["tab_size","translate_tabs_to_spaces",'default_line_ending','keep_blank_lines']
     for target in targets:
       result += create_parameter(target)
+
     return result
 
   def load_settings(self):
