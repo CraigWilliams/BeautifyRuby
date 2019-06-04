@@ -49,6 +49,12 @@ If you use project-specific rubies and gem sets managed with `rvm`, then simply 
 
 and then the `htmlbeautifier` gem is found even if it is only installed for this project.
 
+If you are using ruby on the Windows Subsystem for Linux, use:
+
+```
+  "ruby": "wsl ruby"
+```
+
 ### Tabs or Spaces
 
 By default, Sublime does not translate tabs to spaces. If you wish to use tabs you will not need to change your settings. If you wish to use spaces, add the following setting.
