@@ -27,7 +27,7 @@ You can change the file patterns handled by this plugin in the settings:
     "file_patterns": [ "\\.html\\.erb", "\\.rb", "\\.rake", "Rakefile", "Gemfile" ],
     "html_erb_patterns": ["\\.html\\.erb"],
 
-This plugin uses ruby scripts to beautify your buffer, so it needs ruby installed. You can configure your ruby interpreter under Preferences -> Package Settings -> BeautifyRuby -> Settings Default/User. Although the default should work on linux and osx, not setting this right is a common problem.
+This plugin uses ruby scripts to beautify your buffer, so it needs ruby installed. You can configure your ruby interpreter under Preferences -> Package Settings -> BeautifyRuby -> Settings Default/User [https://user-images.githubusercontent.com/15097447/62330753-f6fc5100-b4fc-11e9-8c41-1015b62ac943.png](click here for screenshot). Although the default should work on linux and osx, not setting this right is a common problem.
 
 If you do not use the system ruby, type in your favourite shell:
 
