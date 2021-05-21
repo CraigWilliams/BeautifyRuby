@@ -1,0 +1,7 @@
+[{
+	"id": "beautifyrubymenu",
+	"caption": "BeautifyRuby",
+	"children": [
+		{ "id": "beautifyfile", "caption": "Beautify File", "command": "beautify_ruby" }
+	]
+}]
